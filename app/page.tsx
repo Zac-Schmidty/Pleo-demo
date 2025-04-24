@@ -1,103 +1,176 @@
 import Image from "next/image";
+import { CheckCircle2 } from "lucide-react"
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="max-w-7xl mx-auto min-h-screen p-8">
+      <main className="flex flex-col gap-12">
+        {/* Header Section */}
+        <div className="text-center space-y-4">
+          <h1 className="text-4xl font-bold tracking-tight">
+            Welcome to my Pleo Sales Engineering Demo
+          </h1>
+          <p className="text-lg text-slate-600">
+            An expense management system demonstration
+          </p>
         </div>
+
+        {/* What is Pleo Section */}
+        <section className="text-center max-w-3xl mx-auto space-y-4">
+          <h2 className="text-3xl font-bold">What is Pleo?</h2>
+          <p className="text-xl font-semibold text-blue-600">
+            Smart Spending. Simple Control. Real-Time Visibility.
+          </p>
+          <p className="text-lg text-slate-600 leading-relaxed">
+            Pleo is a modern spend management solution that replaces outdated expense workflows 
+            with smart company cards, automated expense tracking, and seamless accounting 
+            integration — giving businesses real-time visibility and full control of team spending.
+          </p>
+        </section>
+
+        {/* Key Features Section */}
+        <section className="space-y-6">
+          <h2 className="text-2xl font-bold text-center">Key Features at a Glance</h2>
+          <div className="grid md:grid-cols-2 gap-4">
+            {[
+              {
+                feature: "Smart Company Cards",
+                does: "Issue physical or virtual cards to employees",
+                matters: "Empower teams to spend without delays, reduce bottlenecks"
+              },
+              {
+                feature: "Automated Receipt Capture",
+                does: "Snap & attach receipts via mobile app",
+                matters: "Say goodbye to lost receipts and manual chasing"
+              },
+              {
+                feature: "Real-Time Expense Tracking",
+                does: "Every purchase shows up instantly",
+                matters: "Keep finance informed and in control, always"
+              },
+              {
+                feature: "Spend Controls & Approvals",
+                does: "Set limits, auto-flag unusual spend, require approvals",
+                matters: "Protect budget and prevent overspend"
+              },
+              {
+                feature: "Accounting Integrations",
+                does: "Connect to Xero, QuickBooks, Sage, etc.",
+                matters: "Cut down on admin and speed up month-end close"
+              }
+            ].map((item, i) => (
+              <div key={i} className="p-6 bg-white rounded-lg shadow-sm border">
+                <h3 className="font-bold text-lg text-blue-600">{item.feature}</h3>
+                <p className="mt-2 text-slate-600">{item.does}</p>
+                <p className="mt-1 text-sm text-slate-500">{item.matters}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* How It Works Section */}
+        <section className="space-y-6">
+          <h2 className="text-2xl font-bold text-center">How It Works</h2>
+          <div className="max-w-2xl mx-auto">
+            <div className="space-y-4">
+              {[
+                "Manager Sets Card Limits",
+                "Employee Makes Purchase",
+                "Real-Time Notification + Auto Receipt Request",
+                "Expense Appears in Dashboard",
+                "Export to Accounting Software in 1 Click"
+              ].map((step, i) => (
+                <div key={i} className="flex items-center gap-4">
+                  <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold">
+                    {i + 1}
+                  </div>
+                  <p className="text-lg">{step}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Why Companies Choose Pleo Section */}
+        <section className="space-y-6">
+          <h2 className="text-2xl font-bold text-center">Why Companies Choose Pleo</h2>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              {
+                title: "Boost Efficiency",
+                desc: "No more receipt chasing or spreadsheet hell."
+              },
+              {
+                title: "Empower Employees",
+                desc: "Let teams spend responsibly — without the friction."
+              },
+              {
+                title: "Complete Visibility",
+                desc: "See what's being spent, by whom, and why — in real-time."
+              },
+              {
+                title: "Scales With You",
+                desc: "From startups to 1,000+ headcount orgs, Pleo grows with your business."
+              }
+            ].map((item, i) => (
+              <div key={i} className="p-6 bg-white rounded-lg shadow-sm border">
+                <div className="flex items-center gap-2 mb-2">
+                  <CheckCircle2 className="w-5 h-5 text-green-500" />
+                  <h3 className="font-bold">{item.title}</h3>
+                </div>
+                <p className="text-sm text-slate-600">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Integrations Section */}
+        <section className="space-y-6">
+          <h2 className="text-2xl font-bold text-center">Integrates Seamlessly With</h2>
+          <div className="max-w-2xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-4">
+            {[
+              "Xero",
+              "QuickBooks",
+              "Sage",
+              "Netsuite",
+              "Google Workspace",
+              "Microsoft Teams",
+              "… and more!"
+            ].map((integration, i) => (
+              <div 
+                key={i} 
+                className="p-4 bg-white rounded-lg shadow-sm border text-center hover:border-blue-500 transition-colors"
+              >
+                <p className="font-medium text-slate-700">{integration}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Perfect For Section */}
+        <section className="space-y-6">
+          <h2 className="text-2xl font-bold text-center">Perfect For</h2>
+          <div className="max-w-2xl mx-auto grid sm:grid-cols-2 gap-4">
+            {[
+              "Remote or hybrid teams",
+              "Fast-scaling startups",
+              "Finance teams drowning in manual processes",
+              "Any business that hates chasing receipts"
+            ].map((item, i) => (
+              <div 
+                key={i} 
+                className="p-6 bg-white rounded-lg shadow-sm border"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                  <p className="text-lg text-slate-700">{item}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }
