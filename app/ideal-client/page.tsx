@@ -4,11 +4,12 @@ export default function IdealClientPage() {
   return (
     <div className="max-w-7xl mx-auto p-8">
       <h1 className="text-3xl font-bold mb-2">Ideal Client Example: Hopin</h1>
+      <p className="text-gray-600 mb-8">Virtual events platform scaling globally with distributed teams</p>
 
       {/* About Hopin */}
       <section className="bg-white p-6 rounded-lg shadow-sm border mb-8">
         <h2 className="text-2xl font-semibold mb-4">About Hopin</h2>
-        <p className="text-slate-700 leading-relaxed">
+        <p className="text-gray-700 leading-relaxed">
           A fast-scaling virtual events and hybrid engagement platform, that enables organizations 
           to host immersive online experiences — from global summits to local community meetups. 
           They went fully remote during their scale-up and hired globally at pace (300+ employees). 
@@ -46,9 +47,9 @@ export default function IdealClientPage() {
               }
             ].map((item, i) => (
               <div key={i} className="border rounded-lg p-4">
-                <h4 className="font-semibold text-blue-600">{item.team}</h4>
-                <p className="text-slate-600 mt-1">{item.role}</p>
-                <p className="text-sm text-slate-500 mt-2">{item.relevance}</p>
+                <h4 className="font-semibold text-black">{item.team}</h4>
+                <p className="text-gray-600 mt-1">{item.role}</p>
+                <p className="text-sm text-gray-500 mt-2">{item.relevance}</p>
               </div>
             ))}
           </div>
@@ -73,9 +74,9 @@ export default function IdealClientPage() {
               }
             ].map((item, i) => (
               <div key={i} className="border rounded-lg p-4">
-                <h4 className="font-semibold text-blue-600">{item.role}</h4>
-                <p className="text-slate-600 mt-1">{item.responsibility}</p>
-                <p className="text-sm text-slate-500 mt-2">{item.needs}</p>
+                <h4 className="font-semibold text-black">{item.role}</h4>
+                <p className="text-gray-600 mt-1">{item.responsibility}</p>
+                <p className="text-sm text-gray-500 mt-2">{item.needs}</p>
               </div>
             ))}
           </div>
@@ -84,7 +85,7 @@ export default function IdealClientPage() {
 
       {/* Pain Points & Solutions */}
       <section className="grid md:grid-cols-2 gap-8 mb-8">
-        <div className="bg-white p-6 rounded-lg shadow-sm border">
+        <div className="bg-white p-6 rounded-lg shadow-md border-0">
           <h2 className="text-2xl font-semibold mb-4">Pain Points</h2>
           <div className="space-y-4">
             {[
@@ -118,11 +119,11 @@ export default function IdealClientPage() {
               }
             ].map((item, i) => (
               <div key={i} className="border-b last:border-0 pb-4">
-                <h3 className="font-medium text-red-600 mb-2">{item.title}</h3>
+                <h3 className="font-medium text-black mb-2">{item.title}</h3>
                 <ul className="space-y-1">
                   {item.points.map((point, j) => (
-                    <li key={j} className="text-slate-600 text-sm flex items-center gap-2">
-                      <span className="text-red-500">●</span>
+                    <li key={j} className="text-gray-600 text-sm flex items-center gap-2">
+                      <span className="text-black">●</span>
                       {point}
                     </li>
                   ))}
@@ -132,7 +133,7 @@ export default function IdealClientPage() {
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm border">
+        <div className="bg-white p-6 rounded-lg shadow-md border-0">
           <h2 className="text-2xl font-semibold mb-4">Pleo Solution</h2>
           <div className="space-y-4">
             {[
@@ -162,9 +163,9 @@ export default function IdealClientPage() {
               }
             ].map((item, i) => (
               <div key={i} className="border-b last:border-0 pb-4">
-                <h3 className="font-medium text-green-600 mb-1">{item.benefit}</h3>
-                <p className="text-sm text-slate-600 mb-2">{item.solution}</p>
-                <p className="text-xs text-slate-500 italic">{item.context}</p>
+                <h3 className="font-medium text-pink-600 mb-1">{item.benefit}</h3>
+                <p className="text-sm text-gray-600 mb-2">{item.solution}</p>
+                <p className="text-xs text-gray-500 italic">{item.context}</p>
               </div>
             ))}
           </div>
@@ -172,7 +173,7 @@ export default function IdealClientPage() {
       </section>
 
       {/* ROI Section */}
-      <section className="bg-white p-6 rounded-lg shadow-sm border">
+      <section className="bg-white p-6 rounded-lg shadow-md border-0">
         <h2 className="text-2xl font-semibold mb-4">Expected ROI</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
@@ -198,15 +199,15 @@ export default function IdealClientPage() {
             }
           ].map((item, i) => (
             <div key={i} className="border rounded-lg p-4">
-              <h3 className="font-medium text-blue-600 mb-2">{item.category}</h3>
+              <h3 className="font-medium text-black mb-2">{item.category}</h3>
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <div>
-                  <p className="text-slate-500">Before</p>
-                  <p className="text-red-600 font-medium">{item.before}</p>
+                  <p className="text-gray-500">Before</p>
+                  <p className="text-black font-medium">{item.before}</p>
                 </div>
                 <div>
-                  <p className="text-slate-500">After</p>
-                  <p className="text-green-600 font-medium">{item.after}</p>
+                  <p className="text-gray-500">After</p>
+                  <p className="text-pink-600 font-medium">{item.after}</p>
                 </div>
               </div>
             </div>

@@ -34,10 +34,83 @@ const formSchema = z.object({
 
 // Mock OCR result interface
 interface ParsedReceipt {
-  merchantName: string;
+  employeeName: string;
   date: string;
   amount: string;
   category: string;
+  notes: string;
+}
+
+// Helper function to generate a random date within the last 30 days
+function getRandomDate() {
+  const end = new Date()
+  const start = new Date()
+  start.setDate(end.getDate() - 30)
+  const randomDate = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()))
+  return randomDate.toISOString().split('T')[0] // Returns YYYY-MM-DD
+}
+
+// Helper function to get random amount between min and max
+function getRandomAmount(min: number, max: number) {
+  return Number((Math.random() * (max - min) + min).toFixed(2))
+}
+
+// Helper function to get random item from array
+function getRandomItem<T>(array: T[]): T {
+  return array[Math.floor(Math.random() * array.length)]
+}
+
+// Generate random expense data
+function generateExpenses() {
+  const employees = [
+    'John Smith',
+    'Sarah Johnson',
+    'Michael Brown',
+    'Emily Davis',
+    'David Wilson',
+    'Lisa Anderson',
+    'James Taylor',
+    'Jessica Martinez'
+  ]
+
+  const expenseTypes = [
+    { category: 'Travel', items: ['Flight to London', 'Train ticket', 'Hotel stay', 'Taxi ride', 'Car rental', 'Airport parking'] },
+    { category: 'Office Supplies', items: ['Printer paper', 'Ink cartridges', 'Notebooks', 'Pens and markers', 'Desk organizer', 'Sticky notes'] },
+    { category: 'Software', items: ['Zoom subscription', 'Adobe Creative Cloud', 'Slack annual plan', 'Notion team license', 'Microsoft 365', 'Jira license'] },
+    { category: 'Client Entertainment', items: ['Business lunch', 'Coffee meeting', 'Client dinner', 'Event tickets', 'Golf outing', 'Restaurant booking'] },
+    { category: 'Training', items: ['Online course', 'Conference ticket', 'Workshop materials', 'Certification exam', 'Team training session', 'Professional development'] },
+    { category: 'Marketing', items: ['Facebook Ads', 'LinkedIn Premium', 'Trade show booth', 'Marketing materials', 'Banner printing', 'Social media tools'] },
+    { category: 'Equipment', items: ['Laptop', 'Monitor', 'Keyboard', 'Wireless mouse', 'Headphones', 'Webcam', 'Phone charger'] },
+    { category: 'Miscellaneous', items: ['Office snacks', 'Team lunch', 'Birthday celebration', 'Office plants', 'First aid supplies', 'Coffee supplies'] }
+  ]
+
+  const amountRanges = {
+    'Travel': { min: 50, max: 2000 },
+    'Office Supplies': { min: 10, max: 200 },
+    'Software': { min: 20, max: 500 },
+    'Client Entertainment': { min: 30, max: 300 },
+    'Training': { min: 100, max: 1500 },
+    'Marketing': { min: 50, max: 1000 },
+    'Equipment': { min: 50, max: 2000 },
+    'Miscellaneous': { min: 5, max: 150 }
+  }
+
+  const category = getRandomItem(expenseTypes)
+  const notes = getRandomItem(category.items)
+  const amount = getRandomAmount(
+      amountRanges[category.category as keyof typeof amountRanges].min,
+      amountRanges[category.category as keyof typeof amountRanges].max
+    )
+  const employeeName = getRandomItem(employees)
+  const date = getRandomDate()
+
+  return {
+    category: category.category,
+    notes: notes,
+    date: date,
+    amount: amount,
+    employeeName: employeeName,
+  }
 }
 
 export default function ExpenseForm() {
@@ -63,12 +136,15 @@ export default function ExpenseForm() {
     // Get today's date in YYYY-MM-DD format
     const today = new Date().toISOString().split('T')[0];
 
+    const expense = generateExpenses()
+
     // Mock data - now using today's date
     const mockData: ParsedReceipt = {
-      merchantName: "Coffee Shop",
-      date: today,
-      amount: "15.99",
-      category: "meals",
+      employeeName: expense.employeeName,
+      category: expense.category,
+      notes: expense.notes,
+      date: expense.date,
+      amount: expense.amount.toString(),
     }
 
     setParsedData(mockData);
@@ -77,7 +153,7 @@ export default function ExpenseForm() {
     form.setValue("date", mockData.date);
     form.setValue("amount", mockData.amount);
     form.setValue("category", mockData.category);
-    form.setValue("notes", `Merchant: ${mockData.merchantName}`);
+    form.setValue("notes", mockData.notes);
   }
 
   // Handle form submission
@@ -85,6 +161,27 @@ export default function ExpenseForm() {
     console.log(values)
     // Here you would typically send the data to your backend
   }
+
+  // Generate 20 random expenses
+  //const expenses = generateExpenses()
+  
+  // Get unique employees and categories from the generated data
+  /*
+  const uniqueEmployees = Array.from(new Set(expenses.map(e => e.employeeName)))
+  const uniqueCategories = Array.from(new Set(expenses.map(e => e.category)))
+
+  const [selectedEmployee, setSelectedEmployee] = useState<string>('all')
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([])
+  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([])
+
+  // Filter logic remains the same
+  const filteredExpenses = expenses.filter(expense => {
+    const employeeMatch = selectedEmployee === 'all' || expense.employeeName === selectedEmployee
+    const categoryMatch = selectedCategories.length === 0 || selectedCategories.includes(expense.category)
+    const statusMatch = selectedStatuses.length === 0 || selectedStatuses.includes(expense.status)
+    return employeeMatch && categoryMatch && statusMatch
+  })
+  */
 
   return (
     <div className="max-w-2xl mx-auto p-8">
@@ -113,15 +210,6 @@ export default function ExpenseForm() {
                         }
                       }}
                     />
-                    {parsedData && (
-                      <div className="p-4 bg-slate-100 rounded-md">
-                        <h3 className="font-semibold mb-2">Parsed Receipt Data:</h3>
-                        <p>Merchant: {parsedData.merchantName}</p>
-                        <p>Date: {parsedData.date}</p>
-                        <p>Amount: ${parsedData.amount}</p>
-                        <p>Category: {parsedData.category}</p>
-                      </div>
-                    )}
                   </div>
                 </FormControl>
                 <FormMessage />
@@ -156,10 +244,15 @@ export default function ExpenseForm() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="travel">Travel</SelectItem>
-                    <SelectItem value="meals">Meals</SelectItem>
-                    <SelectItem value="supplies">Supplies</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
+                    <SelectItem value="Travel">Travel</SelectItem>
+                    <SelectItem value="Office Supplies">Office Supplies</SelectItem>
+                    <SelectItem value="Meals">Meals</SelectItem>
+                    <SelectItem value="Client Entertainment">Client Entertainment</SelectItem>
+                    <SelectItem value="Miscellaneous">Miscellaneous</SelectItem>
+                    <SelectItem value="Training">Training</SelectItem>
+                    <SelectItem value="Equipment">Equipment</SelectItem>
+                    <SelectItem value="Software">Software</SelectItem>
+                    <SelectItem value="Marketing">Marketing</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />

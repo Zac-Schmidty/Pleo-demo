@@ -7,21 +7,21 @@ export default function Home() {
       <main className="flex flex-col gap-12">
         {/* Header Section */}
         <div className="text-center space-y-4">
-          <h1 className="text-4xl font-bold tracking-tight">
+          <h1 className="text-4xl font-bold tracking-tight text-black">
             Welcome to my Pleo Sales Engineering Demo
           </h1>
-          <p className="text-lg text-slate-600">
+          <p className="text-lg text-gray-700">
             An expense management system demonstration
           </p>
         </div>
 
         {/* What is Pleo Section */}
-        <section className="text-center max-w-3xl mx-auto space-y-4">
+        <section className="text-center max-w-3xl mx-auto space-y-4 bg-white p-8 rounded-lg shadow-md">
           <h2 className="text-3xl font-bold">What is Pleo?</h2>
-          <p className="text-xl font-semibold text-blue-600">
+          <p className="text-xl font-semibold text-pink-600">
             Smart Spending. Simple Control. Real-Time Visibility.
           </p>
-          <p className="text-lg text-slate-600 leading-relaxed">
+          <p className="text-lg text-gray-600 leading-relaxed">
             Pleo is a modern spend management solution that replaces outdated expense workflows 
             with smart company cards, automated expense tracking, and seamless accounting 
             integration — giving businesses real-time visibility and full control of team spending.
@@ -30,7 +30,7 @@ export default function Home() {
 
         {/* Key Features Section */}
         <section className="space-y-6">
-          <h2 className="text-2xl font-bold text-center">Key Features at a Glance</h2>
+          <h2 className="text-2xl font-bold text-center text-black">Key Features at a Glance</h2>
           <div className="grid md:grid-cols-2 gap-4">
             {[
               {
@@ -59,10 +59,10 @@ export default function Home() {
                 matters: "Cut down on admin and speed up month-end close"
               }
             ].map((item, i) => (
-              <div key={i} className="p-6 bg-white rounded-lg shadow-sm border">
-                <h3 className="font-bold text-lg text-blue-600">{item.feature}</h3>
-                <p className="mt-2 text-slate-600">{item.does}</p>
-                <p className="mt-1 text-sm text-slate-500">{item.matters}</p>
+              <div key={i} className="p-6 bg-white rounded-lg shadow-md border-0">
+                <h3 className="font-bold text-lg text-black">{item.feature}</h3>
+                <p className="mt-2 text-gray-600">{item.does}</p>
+                <p className="mt-1 text-sm text-gray-500">{item.matters}</p>
               </div>
             ))}
           </div>
@@ -72,29 +72,27 @@ export default function Home() {
         <section className="space-y-6">
           <h2 className="text-2xl font-bold text-center">How It Works</h2>
           <div className="max-w-2xl mx-auto">
-            <div className="space-y-4">
-              {[
-                "Manager Sets Card Limits",
-                "Employee Makes Purchase",
-                "Real-Time Notification + Auto Receipt Request",
-                "Expense Appears in Dashboard",
-                "Export to Accounting Software in 1 Click"
-              ].map((step, i) => (
-                <div key={i} className="flex items-center gap-4">
-                  <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold">
-                    {i + 1}
-                  </div>
-                  <p className="text-lg">{step}</p>
+            {[
+              "Manager Sets Card Limits",
+              "Employee Makes Purchase",
+              "Real-Time Notification + Auto Receipt Request",
+              "Expense Appears in Dashboard",
+              "Export to Accounting Software in 1 Click"
+            ].map((step, i) => (
+              <div key={i} className="flex items-center gap-4 mb-4">
+                <div className="w-8 h-8 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center font-bold">
+                  {i + 1}
                 </div>
-              ))}
-            </div>
+                <p className="text-lg text-gray-700">{step}</p>
+              </div>
+            ))}
           </div>
         </section>
 
-        {/* Why Companies Choose Pleo Section */}
+        {/* Why Companies Choose Pleo */}
         <section className="space-y-6">
           <h2 className="text-2xl font-bold text-center">Why Companies Choose Pleo</h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="max-w-2xl mx-auto grid sm:grid-cols-2 gap-4">
             {[
               {
                 title: "Boost Efficiency",
@@ -113,12 +111,12 @@ export default function Home() {
                 desc: "From startups to 1,000+ headcount orgs, Pleo grows with your business."
               }
             ].map((item, i) => (
-              <div key={i} className="p-6 bg-white rounded-lg shadow-sm border">
+              <div key={i} className="p-6 bg-white rounded-lg shadow-md border-0">
                 <div className="flex items-center gap-2 mb-2">
-                  <CheckCircle2 className="w-5 h-5 text-green-500" />
-                  <h3 className="font-bold">{item.title}</h3>
+                  <CheckCircle2 className="w-5 h-5 text-pink-500" />
+                  <h3 className="font-bold text-black">{item.title}</h3>
                 </div>
-                <p className="text-sm text-slate-600">{item.desc}</p>
+                <p className="text-sm text-gray-600">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -139,9 +137,9 @@ export default function Home() {
             ].map((integration, i) => (
               <div 
                 key={i} 
-                className="p-4 bg-white rounded-lg shadow-sm border text-center hover:border-blue-500 transition-colors"
+                className="p-4 bg-white rounded-lg shadow-md border text-center hover:border-pink-500 transition-colors"
               >
-                <p className="font-medium text-slate-700">{integration}</p>
+                <p className="font-medium text-gray-700">{integration}</p>
               </div>
             ))}
           </div>
@@ -159,17 +157,16 @@ export default function Home() {
             ].map((item, i) => (
               <div 
                 key={i} 
-                className="p-6 bg-white rounded-lg shadow-sm border"
+                className="p-6 bg-white rounded-lg shadow-md border"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                  <p className="text-lg text-slate-700">{item}</p>
+                  <div className="w-2 h-2 bg-pink-500 rounded-full"></div>
+                  <p className="text-lg text-gray-700">{item}</p>
                 </div>
               </div>
             ))}
           </div>
         </section>
-
       </main>
     </div>
   );
