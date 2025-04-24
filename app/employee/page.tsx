@@ -200,16 +200,24 @@ export default function ExpenseForm() {
                 <FormLabel>Receipt</FormLabel>
                 <FormControl>
                   <div className="space-y-4">
-                    <Input 
-                      type="file" 
-                      onChange={async (e) => {
-                        const file = e.target.files?.[0]
-                        if (file) {
-                          field.onChange(file.name)
-                          await simulateOCR(file)
-                        }
-                      }}
-                    />
+                    <label 
+                      htmlFor="file-upload" 
+                      className="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 cursor-pointer hover:border-pink-500 transition-colors"
+                    >
+                      <span>Choose Receipt</span>
+                      <Input 
+                        id="file-upload"
+                        type="file" 
+                        className="hidden"
+                        onChange={async (e) => {
+                          const file = e.target.files?.[0]
+                          if (file) {
+                            field.onChange(file.name)
+                            await simulateOCR(file)
+                          }
+                        }}
+                      />
+                    </label>
                   </div>
                 </FormControl>
                 <FormMessage />
