@@ -83,7 +83,7 @@ export default function ManagerPage() {
     <div className="max-w-7xl mx-auto p-8">
       <h1 className="text-2xl font-bold mb-2">Expense Management</h1>
       <p className="text-slate-600 mb-6 text-sm">
-        Review and manage employee expense submissions
+        Review and manage employee expense submissions. Hover over the category to view more expense details. 
       </p>
 
       <div className="flex gap-4 mb-6">
@@ -138,7 +138,6 @@ export default function ManagerPage() {
             <TableHead>Date</TableHead>
             <TableHead>Category</TableHead>
             <TableHead>Amount</TableHead>
-            <TableHead>Notes</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Actions</TableHead>
           </TableRow>
@@ -148,18 +147,20 @@ export default function ManagerPage() {
             <TableRow key={expense.id}>
               <TableCell>{expense.employeeName}</TableCell>
               <TableCell>{expense.date}</TableCell>
-              <TableCell className="capitalize">{expense.category}</TableCell>
-              <TableCell>${Number(expense.amount).toFixed(2)}</TableCell>
-              <TableCell className="max-w-[180px]">
-                <div className="space-y-1">
+              <TableCell 
+                className="capitalize relative group cursor-help"
+              >
+                <span className="hover:text-pink-600">{expense.category}</span>
+                <div className="absolute hidden group-hover:block bg-white border border-gray-200 p-2 rounded-md shadow-lg z-10 -mt-1 left-full ml-2 min-w-[200px]">
                   <p className="text-gray-500 text-xs">
                     Submitted: {expense.submissionDate || expense.date}
                   </p>
-                  <p className="text-gray-700 text-xs truncate">
+                  <p className="text-gray-700 text-xs mt-1">
                     {expense.notes}
                   </p>
                 </div>
               </TableCell>
+              <TableCell>${Number(expense.amount).toFixed(2)}</TableCell>
               <TableCell>
                 <span className={`capitalize px-2 py-1 rounded-full text-sm
                   ${expense.status === 'approved' ? 'bg-green-100 text-green-800' : 
