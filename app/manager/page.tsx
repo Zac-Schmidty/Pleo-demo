@@ -33,6 +33,8 @@ import {
 
 export default function ManagerPage() {
   const [expenses, setExpenses] = useState<Expense[]>(mockExpenses)
+  const [currentPage, setCurrentPage] = useState(1)
+  const expensesPerPage = 20
   const [statusFilter, setStatusFilter] = useState<string>("all")
   const [categoryFilter, setCategoryFilter] = useState<string>("all")
   const [employeeFilter, setEmployeeFilter] = useState<string>("all")
@@ -58,6 +60,12 @@ export default function ManagerPage() {
       return matchesStatus && matchesCategory && matchesEmployee
     })
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+
+  // Get paginated expenses
+  const indexOfLastExpense = currentPage * expensesPerPage
+  const indexOfFirstExpense = indexOfLastExpense - expensesPerPage
+  const currentExpenses = filteredExpenses.slice(indexOfFirstExpense, indexOfLastExpense)
+  const totalPages = Math.ceil(filteredExpenses.length / expensesPerPage)
 
   const handleStatusChange = (expenseId: string, newStatus: 'approved' | 'rejected') => {
     setExpenses(expenses.map(expense => 
@@ -136,7 +144,7 @@ export default function ManagerPage() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {filteredExpenses.map((expense) => (
+          {currentExpenses.map((expense) => (
             <TableRow key={expense.id}>
               <TableCell>{expense.employeeName}</TableCell>
               <TableCell>{expense.date}</TableCell>
@@ -217,6 +225,40 @@ export default function ManagerPage() {
           ))}
         </TableBody>
       </Table>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="flex justify-center gap-2 mt-4">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </Button>
+          
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <Button
+              key={page}
+              variant={currentPage === page ? "default" : "outline"}
+              size="sm"
+              onClick={() => setCurrentPage(page)}
+            >
+              {page}
+            </Button>
+          ))}
+          
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+            disabled={currentPage === totalPages}
+          >
+            Next
+          </Button>
+        </div>
+      )}
     </div>
   )
 } 
