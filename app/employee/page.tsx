@@ -23,6 +23,17 @@ import {
 } from "@/components/ui/select"
 import { useState } from "react"
 import { toast } from "sonner"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 // Define the form validation schema
 const formSchema = z.object({
@@ -308,7 +319,27 @@ export default function ExpenseForm() {
             )}
           />
 
-          <Button type="submit">Submit Expense</Button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button type="button">Submit Expense</Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Submit Expense</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Are you sure you want to submit this expense?
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={() => form.handleSubmit(onSubmit)()}
+                >
+                  Submit
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </form>
       </Form>
     </div>

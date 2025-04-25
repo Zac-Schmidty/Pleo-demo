@@ -1,9 +1,11 @@
-import type { Metadata } from "next";
+"use client"
+
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import { Toaster } from 'sonner'
 import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,11 +16,6 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-
-export const metadata: Metadata = {
-  title: "Zac's Pleo Demo",
-  description: "My Sales Engineering Demo for Pleo",
-};
 
 export default function RootLayout({
   children,
@@ -91,13 +88,17 @@ export default function RootLayout({
 }
 
 function NavLink({ href, children }: { href: string, children: React.ReactNode }) {
+  const pathname = usePathname()
+  const isActive = pathname === href
+
   return (
     <Link 
       href={href}
       className={cn(
-        "text-gray-600 hover:text-black px-3 py-2 rounded-md text-sm font-medium",
-        "transition-colors duration-200",
-        "hover:bg-pink-50"
+        "px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200",
+        isActive 
+          ? "bg-pink-50 text-pink-600" 
+          : "text-gray-600 hover:text-black hover:bg-gray-50"
       )}
     >
       {children}
