@@ -11,7 +11,7 @@ export default function Home() {
             Welcome to my Pleo Sales Engineering Demo
           </h1>
           <p className="text-lg text-gray-700">
-            An expense management system demonstration
+            An expense management system demonstration, showing simplified employee and manager workflows.
           </p>
         </div>
 

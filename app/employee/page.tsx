@@ -193,7 +193,7 @@ export default function ExpenseForm() {
     <div className="max-w-2xl mx-auto p-8">
       <h1 className="text-2xl font-bold mb-2">Submit Expense</h1>
       <p className="text-slate-600 mb-6 text-sm">
-        Once a receipt is input the data is extracted and autofills the expense info. This is just a demo using randomised expense data, but the functionality is valid. Employee would also not have to input their name (sign ins), but it is used for the demo.
+        Input the receipt to extract the expense data. The demo uses randomised expense data, but the functionality is valid. Employee would not have to input their name (sign-ins), this is used for the purposes of the demo.
       </p>
       
       <Form {...form}>
