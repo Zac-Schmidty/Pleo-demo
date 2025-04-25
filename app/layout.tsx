@@ -6,6 +6,8 @@ import Link from "next/link";
 import { Toaster } from 'sonner'
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
+import { Menu } from "lucide-react";
+import { useState } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,6 +24,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <html lang="en">
       <body
@@ -29,20 +33,40 @@ export default function RootLayout({
       >
         <div className="min-h-screen flex flex-col">
           <nav className="border-b sticky top-0 bg-white/80 backdrop-blur-sm z-50">
-            <div className="max-w-7xl mx-auto px-4">
-              <div className="flex flex-col sm:flex-row sm:items-center py-4 sm:h-16 gap-4 sm:gap-8">
-                <span className="text-xl font-bold text-black mr-8">Pleo Demo</span>
+            <div className="max-w-7xl mx-auto px-1 sm:px-4">
+              <div className="flex items-center h-16">
+                <span className="text-xl font-bold text-black mr-4 sm:mr-8">Pleo Demo</span>
+                {/* Desktop Navigation */}
                 <div className="hidden sm:flex space-x-1">
                   <NavLink href="/">Home</NavLink>
                   <NavLink href="/ideal-client">Ideal Client</NavLink>
                   <NavLink href="/employee">Employee</NavLink>
                   <NavLink href="/manager">Manager</NavLink>
                 </div>
+                {/* Mobile Menu Button */}
+                <button 
+                  className="ml-auto sm:hidden"
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                >
+                  <Menu className="h-6 w-6" />
+                </button>
               </div>
             </div>
           </nav>
 
-          <main className="flex-1 p-4 sm:p-8">
+          {/* Mobile Navigation Dropdown */}
+          {mobileMenuOpen && (
+            <div className="sm:hidden border-t bg-white absolute w-full shadow-lg">
+              <div className="flex flex-col py-2 px-2 sm:px-4">
+                <NavLink href="/">Home</NavLink>
+                <NavLink href="/ideal-client">Ideal Client</NavLink>
+                <NavLink href="/employee">Employee</NavLink>
+                <NavLink href="/manager">Manager</NavLink>
+              </div>
+            </div>
+          )}
+
+          <main className="flex-1 px-1 py-4 sm:p-8">
             {children}
           </main>
         </div>
@@ -56,16 +80,6 @@ export default function RootLayout({
         </footer>
 
         <Toaster />
-
-        {/* Update mobile menu too */}
-        <div className="sm:hidden border-t bg-white">
-          <div className="flex flex-col py-2">
-            <NavLink href="/">Home</NavLink>
-            <NavLink href="/ideal-client">Ideal Client</NavLink>
-            <NavLink href="/employee">Employee</NavLink>
-            <NavLink href="/manager">Manager</NavLink>
-          </div>
-        </div>
       </body>
     </html>
   );
