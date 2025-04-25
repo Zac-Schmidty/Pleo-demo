@@ -32,7 +32,13 @@ import {
 } from "@/components/ui/alert-dialog"
 
 export default function ManagerPage() {
-  const [expenses, setExpenses] = useState<Expense[]>(mockExpenses)
+  // Initialize with both mock and localStorage data
+  const initialExpenses = [
+    ...mockExpenses,
+    ...JSON.parse(localStorage.getItem('expenses') || '[]')
+  ]
+  
+  const [expenses, setExpenses] = useState<Expense[]>(initialExpenses)
   const [statusFilter, setStatusFilter] = useState<string>("all")
   const [categoryFilter, setCategoryFilter] = useState<string>("all")
   const [employeeFilter, setEmployeeFilter] = useState<string>("all")

@@ -22,6 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { useState } from "react"
+import { toast } from "sonner"
 
 // Define the form validation schema
 const formSchema = z.object({
@@ -158,8 +159,31 @@ export default function ExpenseForm() {
 
   // Handle form submission
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
-    // Here you would typically send the data to your backend
+    // Get existing expenses from localStorage or use empty array
+    const existingExpenses = JSON.parse(localStorage.getItem('expenses') || '[]')
+    
+    // Create new expense
+    const newExpense = {
+      id: Date.now().toString(), // Simple unique ID
+      employeeName: parsedData?.employeeName,
+      date: values.date,
+      category: values.category,
+      amount: parseFloat(values.amount),
+      status: 'pending',
+      notes: values.notes
+    }
+
+    // Add to existing expenses
+    const updatedExpenses = [...existingExpenses, newExpense]
+    
+    // Save to localStorage
+    localStorage.setItem('expenses', JSON.stringify(updatedExpenses))
+    
+    // Clear form
+    form.reset()
+    
+    // Show success message
+    toast.success('Expense submitted successfully')
   }
 
   // Generate 20 random expenses
