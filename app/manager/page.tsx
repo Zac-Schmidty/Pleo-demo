@@ -87,9 +87,10 @@ export default function ManagerPage() {
         Review and manage employee expense submissions. Hover over the category to view more expense details. As this is a demo, the receipt is a static image (worth viewing).
       </p>
 
-      <div className="flex gap-4 mb-6">
+      {/* Filters with horizontal scroll on mobile */}
+      <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 hide-scrollbar">
         <Select onValueChange={setStatusFilter} defaultValue="all">
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-[140px] sm:w-[180px]">
             <SelectValue placeholder="Filter by status" />
           </SelectTrigger>
           <SelectContent>
@@ -101,7 +102,7 @@ export default function ManagerPage() {
         </Select>
 
         <Select onValueChange={setCategoryFilter} defaultValue="all">
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-[140px] sm:w-[180px]">
             <SelectValue placeholder="Filter by category" />
           </SelectTrigger>
           <SelectContent>
@@ -118,7 +119,7 @@ export default function ManagerPage() {
         </Select>
 
         <Select onValueChange={setEmployeeFilter} defaultValue="all">
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-[140px] sm:w-[180px]">
             <SelectValue placeholder="Filter by employee" />
           </SelectTrigger>
           <SelectContent>
@@ -132,112 +133,115 @@ export default function ManagerPage() {
         </Select>
       </div>
 
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Employee</TableHead>
-            <TableHead>Date</TableHead>
-            <TableHead>Category</TableHead>
-            <TableHead>Amount</TableHead>
-            <TableHead>Receipt</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {currentExpenses.map((expense) => (
-            <TableRow key={expense.id}>
-              <TableCell>{expense.employeeName}</TableCell>
-              <TableCell>{expense.date}</TableCell>
-              <TableCell 
-                className="capitalize relative group cursor-help"
-              >
-                <span className="hover:text-pink-600">{expense.category}</span>
-                <div className="absolute hidden group-hover:block bg-white border border-gray-200 p-2 rounded-md shadow-lg z-10 -mt-1 left-full ml-2 min-w-[200px]">
-                  <p className="text-gray-500 text-xs">
-                    Submitted: {expense.submissionDate || expense.date}
-                  </p>
-                  <p className="text-gray-700 text-xs mt-1">
-                    {expense.notes}
-                  </p>
-                </div>
-              </TableCell>
-              <TableCell>${Number(expense.amount).toFixed(2)}</TableCell>
-              <TableCell>
-                <a 
-                  href="/Receipt.jpg"
-                  download="Receipt.jpg"
-                  className="flex items-center gap-1 text-pink-600 hover:text-pink-700 px-2 py-1 rounded-md text-sm hover:bg-gray-100 transition-colors"
-                >
-                  <Download className="h-4 w-4" />
-                  <span className="text-xs">Receipt</span>
-                </a>
-              </TableCell>
-              <TableCell>
-                <span className={`capitalize px-2 py-1 rounded-full text-sm
-                  ${expense.status === 'approved' ? 'bg-green-100 text-green-800' : 
-                    expense.status === 'rejected' ? 'bg-red-100 text-red-800' : 
-                    'bg-yellow-100 text-yellow-800'}`}>
-                  {expense.status}
-                </span>
-              </TableCell>
-              <TableCell>
-                {expense.status === 'pending' && (
-                  <div className="flex gap-2">
-                    <AlertDialog>
-                      <AlertDialogTrigger asChild>
-                        <Button variant="outline" size="sm">
-                          Approve
-                        </Button>
-                      </AlertDialogTrigger>
-                      <AlertDialogContent>
-                        <AlertDialogHeader>
-                          <AlertDialogTitle>Approve Expense</AlertDialogTitle>
-                          <AlertDialogDescription>
-                            Are you sure you want to approve this expense?
-                          </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                          <AlertDialogCancel>Cancel</AlertDialogCancel>
-                          <AlertDialogAction
-                            onClick={() => handleStatusChange(expense.id, 'approved')}
-                          >
-                            Approve
-                          </AlertDialogAction>
-                        </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialog>
-
-                    <AlertDialog>
-                      <AlertDialogTrigger asChild>
-                        <Button variant="outline" size="sm">
-                          Reject
-                        </Button>
-                      </AlertDialogTrigger>
-                      <AlertDialogContent>
-                        <AlertDialogHeader>
-                          <AlertDialogTitle>Reject Expense</AlertDialogTitle>
-                          <AlertDialogDescription>
-                            Are you sure you want to reject this expense?
-                          </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                          <AlertDialogCancel>Cancel</AlertDialogCancel>
-                          <AlertDialogAction
-                            onClick={() => handleStatusChange(expense.id, 'rejected')}
-                          >
-                            Reject
-                          </AlertDialogAction>
-                        </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialog>
-                  </div>
-                )}
-              </TableCell>
+      {/* Make table container scrollable */}
+      <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Employee</TableHead>
+              <TableHead>Date</TableHead>
+              <TableHead>Category</TableHead>
+              <TableHead>Amount</TableHead>
+              <TableHead>Receipt</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Actions</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {currentExpenses.map((expense) => (
+              <TableRow key={expense.id}>
+                <TableCell>{expense.employeeName}</TableCell>
+                <TableCell>{expense.date}</TableCell>
+                <TableCell 
+                  className="capitalize relative group cursor-help"
+                >
+                  <span className="hover:text-pink-600">{expense.category}</span>
+                  <div className="absolute hidden group-hover:block bg-white border border-gray-200 p-2 rounded-md shadow-lg z-10 -mt-1 left-full ml-2 min-w-[200px]">
+                    <p className="text-gray-500 text-xs">
+                      Submitted: {expense.submissionDate || expense.date}
+                    </p>
+                    <p className="text-gray-700 text-xs mt-1">
+                      {expense.notes}
+                    </p>
+                  </div>
+                </TableCell>
+                <TableCell>${Number(expense.amount).toFixed(2)}</TableCell>
+                <TableCell>
+                  <a 
+                    href="/Receipt.jpg"
+                    download="Receipt.jpg"
+                    className="flex items-center gap-1 text-pink-600 hover:text-pink-700 px-2 py-1 rounded-md text-sm hover:bg-gray-100 transition-colors"
+                  >
+                    <Download className="h-4 w-4" />
+                    <span className="text-xs">Receipt</span>
+                  </a>
+                </TableCell>
+                <TableCell>
+                  <span className={`capitalize px-2 py-1 rounded-full text-sm
+                    ${expense.status === 'approved' ? 'bg-green-100 text-green-800' : 
+                      expense.status === 'rejected' ? 'bg-red-100 text-red-800' : 
+                      'bg-yellow-100 text-yellow-800'}`}>
+                    {expense.status}
+                  </span>
+                </TableCell>
+                <TableCell>
+                  {expense.status === 'pending' && (
+                    <div className="flex gap-2">
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button variant="outline" size="sm">
+                            Approve
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Approve Expense</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              Are you sure you want to approve this expense?
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={() => handleStatusChange(expense.id, 'approved')}
+                            >
+                              Approve
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button variant="outline" size="sm">
+                            Reject
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Reject Expense</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              Are you sure you want to reject this expense?
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={() => handleStatusChange(expense.id, 'rejected')}
+                            >
+                              Reject
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+                    </div>
+                  )}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
 
       {/* Pagination */}
       {totalPages > 1 && (
