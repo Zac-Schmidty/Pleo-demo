@@ -30,6 +30,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { Download } from "lucide-react"
 
 export default function ManagerPage() {
   const [expenses, setExpenses] = useState<Expense[]>(mockExpenses)
@@ -83,7 +84,7 @@ export default function ManagerPage() {
     <div className="max-w-7xl mx-auto p-8">
       <h1 className="text-2xl font-bold mb-2">Expense Management</h1>
       <p className="text-slate-600 mb-6 text-sm">
-        Review and manage employee expense submissions. Hover over the category to view more expense details. 
+        Review and manage employee expense submissions. Hover over the category to view more expense details. As this is a demo, the receipt is a static image (worth viewing).
       </p>
 
       <div className="flex gap-4 mb-6">
@@ -138,6 +139,7 @@ export default function ManagerPage() {
             <TableHead>Date</TableHead>
             <TableHead>Category</TableHead>
             <TableHead>Amount</TableHead>
+            <TableHead>Receipt</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Actions</TableHead>
           </TableRow>
@@ -161,6 +163,16 @@ export default function ManagerPage() {
                 </div>
               </TableCell>
               <TableCell>${Number(expense.amount).toFixed(2)}</TableCell>
+              <TableCell>
+                <a 
+                  href="/Receipt.jpg"
+                  download="Receipt.jpg"
+                  className="flex items-center gap-1 text-pink-600 hover:text-pink-700 px-2 py-1 rounded-md text-sm hover:bg-gray-100 transition-colors"
+                >
+                  <Download className="h-4 w-4" />
+                  <span className="text-xs">Receipt</span>
+                </a>
+              </TableCell>
               <TableCell>
                 <span className={`capitalize px-2 py-1 rounded-full text-sm
                   ${expense.status === 'approved' ? 'bg-green-100 text-green-800' : 
