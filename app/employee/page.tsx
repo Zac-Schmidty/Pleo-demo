@@ -26,6 +26,7 @@ import { toast } from "sonner"
 
 // Define the form validation schema
 const formSchema = z.object({
+  employeeName: z.string().min(1, "Employee name is required"),
   date: z.string(),
   category: z.string(),
   amount: z.string(),
@@ -35,7 +36,6 @@ const formSchema = z.object({
 
 // Mock OCR result interface
 interface ParsedReceipt {
-  employeeName: string;
   date: string;
   amount: string;
   category: string;
@@ -63,16 +63,6 @@ function getRandomItem<T>(array: T[]): T {
 
 // Generate random expense data
 function generateExpenses() {
-  const employees = [
-    'John Smith',
-    'Sarah Johnson',
-    'Michael Brown',
-    'Emily Davis',
-    'David Wilson',
-    'Lisa Anderson',
-    'James Taylor',
-    'Jessica Martinez'
-  ]
 
   const expenseTypes = [
     { category: 'Travel', items: ['Flight to London', 'Train ticket', 'Hotel stay', 'Taxi ride', 'Car rental', 'Airport parking'] },
@@ -102,7 +92,6 @@ function generateExpenses() {
       amountRanges[category.category as keyof typeof amountRanges].min,
       amountRanges[category.category as keyof typeof amountRanges].max
     )
-  const employeeName = getRandomItem(employees)
   const date = getRandomDate()
 
   return {
@@ -110,7 +99,6 @@ function generateExpenses() {
     notes: notes,
     date: date,
     amount: amount,
-    employeeName: employeeName,
   }
 }
 
@@ -141,7 +129,6 @@ export default function ExpenseForm() {
 
     // Mock data - now using today's date
     const mockData: ParsedReceipt = {
-      employeeName: expense.employeeName,
       category: expense.category,
       notes: expense.notes,
       date: expense.date,
@@ -164,8 +151,8 @@ export default function ExpenseForm() {
     
     // Create new expense
     const newExpense = {
-      id: Date.now().toString(), // Simple unique ID
-      employeeName: parsedData?.employeeName,
+      id: Date.now().toString(),
+      employeeName: values.employeeName,
       date: values.date,
       category: values.category,
       amount: parseFloat(values.amount),
@@ -186,36 +173,29 @@ export default function ExpenseForm() {
     toast.success('Expense submitted successfully')
   }
 
-  // Generate 20 random expenses
-  //const expenses = generateExpenses()
-  
-  // Get unique employees and categories from the generated data
-  /*
-  const uniqueEmployees = Array.from(new Set(expenses.map(e => e.employeeName)))
-  const uniqueCategories = Array.from(new Set(expenses.map(e => e.category)))
-
-  const [selectedEmployee, setSelectedEmployee] = useState<string>('all')
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([])
-  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([])
-
-  // Filter logic remains the same
-  const filteredExpenses = expenses.filter(expense => {
-    const employeeMatch = selectedEmployee === 'all' || expense.employeeName === selectedEmployee
-    const categoryMatch = selectedCategories.length === 0 || selectedCategories.includes(expense.category)
-    const statusMatch = selectedStatuses.length === 0 || selectedStatuses.includes(expense.status)
-    return employeeMatch && categoryMatch && statusMatch
-  })
-  */
-
   return (
     <div className="max-w-2xl mx-auto p-8">
       <h1 className="text-2xl font-bold mb-2">Submit Expense</h1>
       <p className="text-slate-600 mb-6 text-sm">
-        Once a receipt is input the data is extracted and autofills the expense info. This is just a demo using a pre-empted expense, but the functionality is valid.
+        Once a receipt is input the data is extracted and autofills the expense info. This is just a demo using randomised expense data, but the functionality is valid. Employee would also not have to input their name (sign ins), but it is used for the demo.
       </p>
       
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <FormField
+            control={form.control}
+            name="employeeName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Employee Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter your name" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <FormField
             control={form.control}
             name="receipt"

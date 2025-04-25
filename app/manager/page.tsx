@@ -32,11 +32,13 @@ import {
 } from "@/components/ui/alert-dialog"
 
 export default function ManagerPage() {
-  // Initialize with both mock and localStorage data
+  // Initialize with both mock and localStorage data, sorted by date
   const initialExpenses = [
     ...mockExpenses,
     ...JSON.parse(localStorage.getItem('expenses') || '[]')
-  ]
+  ].sort((a, b) => {
+    return new Date(b.date).getTime() - new Date(a.date).getTime()
+  })
   
   const [expenses, setExpenses] = useState<Expense[]>(initialExpenses)
   const [statusFilter, setStatusFilter] = useState<string>("all")
@@ -48,12 +50,14 @@ export default function ManagerPage() {
     new Set(mockExpenses.map(expense => expense.employeeName))
   ).sort()
 
-  const filteredExpenses = expenses.filter(expense => {
-    const matchesStatus = statusFilter === "all" || expense.status === statusFilter
-    const matchesCategory = categoryFilter === "all" || expense.category === categoryFilter
-    const matchesEmployee = employeeFilter === "all" || expense.employeeName === employeeFilter
-    return matchesStatus && matchesCategory && matchesEmployee
-  })
+  const filteredExpenses = expenses
+    .filter(expense => {
+      const matchesStatus = statusFilter === "all" || expense.status === statusFilter
+      const matchesCategory = categoryFilter === "all" || expense.category === categoryFilter
+      const matchesEmployee = employeeFilter === "all" || expense.employeeName === employeeFilter
+      return matchesStatus && matchesCategory && matchesEmployee
+    })
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
   const handleStatusChange = (expenseId: string, newStatus: 'approved' | 'rejected') => {
     setExpenses(expenses.map(expense => 
