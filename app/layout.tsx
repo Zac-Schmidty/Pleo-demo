@@ -26,6 +26,12 @@ export default function RootLayout({
 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  const NavLinkWithClose = ({ href, children }: { href: string, children: React.ReactNode }) => (
+    <NavLink href={href} onClick={() => setMobileMenuOpen(false)}>
+      {children}
+    </NavLink>
+  );
+
   return (
     <html lang="en">
       <body
@@ -58,10 +64,10 @@ export default function RootLayout({
           {mobileMenuOpen && (
             <div className="sm:hidden border-t bg-white absolute w-full shadow-lg top-16 left-0">
               <div className="flex flex-col py-2 px-2 sm:px-4">
-                <NavLink href="/">Home</NavLink>
-                <NavLink href="/ideal-client">Ideal Client</NavLink>
-                <NavLink href="/employee">Employee</NavLink>
-                <NavLink href="/manager">Manager</NavLink>
+                <NavLinkWithClose href="/">Home</NavLinkWithClose>
+                <NavLinkWithClose href="/ideal-client">Ideal Client</NavLinkWithClose>
+                <NavLinkWithClose href="/employee">Employee</NavLinkWithClose>
+                <NavLinkWithClose href="/manager">Manager</NavLinkWithClose>
               </div>
             </div>
           )}
@@ -85,13 +91,22 @@ export default function RootLayout({
   );
 }
 
-function NavLink({ href, children }: { href: string, children: React.ReactNode }) {
+function NavLink({ 
+  href, 
+  children, 
+  onClick 
+}: { 
+  href: string; 
+  children: React.ReactNode;
+  onClick?: () => void;
+}) {
   const pathname = usePathname()
   const isActive = pathname === href
 
   return (
     <Link 
       href={href}
+      onClick={onClick}
       className={cn(
         "px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200",
         isActive 
