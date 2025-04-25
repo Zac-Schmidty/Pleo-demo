@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { mockExpenses, type Expense } from "../data/expenses"
 import { Button } from "@/components/ui/button"
 import {
@@ -32,22 +32,22 @@ import {
 } from "@/components/ui/alert-dialog"
 
 export default function ManagerPage() {
-  // Initialize with both mock and localStorage data, sorted by date
-  const initialExpenses = [
-    ...mockExpenses,
-    ...JSON.parse(localStorage.getItem('expenses') || '[]')
-  ].sort((a, b) => {
-    return new Date(b.date).getTime() - new Date(a.date).getTime()
-  })
-  
-  const [expenses, setExpenses] = useState<Expense[]>(initialExpenses)
+  const [expenses, setExpenses] = useState<Expense[]>(mockExpenses)
   const [statusFilter, setStatusFilter] = useState<string>("all")
   const [categoryFilter, setCategoryFilter] = useState<string>("all")
   const [employeeFilter, setEmployeeFilter] = useState<string>("all")
 
-  // Get unique employee names for the filter
+  useEffect(() => {
+    const storedExpenses = JSON.parse(localStorage.getItem('expenses') || '[]')
+    const allExpenses = [...mockExpenses, ...storedExpenses].sort((a, b) => {
+      return new Date(b.date).getTime() - new Date(a.date).getTime()
+    })
+    setExpenses(allExpenses)
+  }, [])
+
+  // Get unique employee names from all expenses
   const uniqueEmployees = Array.from(
-    new Set(mockExpenses.map(expense => expense.employeeName))
+    new Set(expenses.map(expense => expense.employeeName))
   ).sort()
 
   const filteredExpenses = expenses
@@ -97,9 +97,14 @@ export default function ManagerPage() {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All Categories</SelectItem>
-            <SelectItem value="travel">Travel</SelectItem>
-            <SelectItem value="meals">Meals</SelectItem>
-            <SelectItem value="supplies">Supplies</SelectItem>
+            <SelectItem value="Travel">Travel</SelectItem>
+            <SelectItem value="Office Supplies">Office Supplies</SelectItem>
+            <SelectItem value="Software">Software</SelectItem>
+            <SelectItem value="Client Entertainment">Client Entertainment</SelectItem>
+            <SelectItem value="Training">Training</SelectItem>
+            <SelectItem value="Marketing">Marketing</SelectItem>
+            <SelectItem value="Equipment">Equipment</SelectItem>
+            <SelectItem value="Miscellaneous">Miscellaneous</SelectItem>
           </SelectContent>
         </Select>
 
@@ -125,6 +130,7 @@ export default function ManagerPage() {
             <TableHead>Date</TableHead>
             <TableHead>Category</TableHead>
             <TableHead>Amount</TableHead>
+            <TableHead>Notes</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Actions</TableHead>
           </TableRow>
@@ -135,7 +141,17 @@ export default function ManagerPage() {
               <TableCell>{expense.employeeName}</TableCell>
               <TableCell>{expense.date}</TableCell>
               <TableCell className="capitalize">{expense.category}</TableCell>
-              <TableCell>${expense.amount.toFixed(2)}</TableCell>
+              <TableCell>${Number(expense.amount).toFixed(2)}</TableCell>
+              <TableCell className="max-w-[180px]">
+                <div className="space-y-1">
+                  <p className="text-gray-500 text-xs">
+                    Submitted: {expense.submissionDate || expense.date}
+                  </p>
+                  <p className="text-gray-700 text-xs truncate">
+                    {expense.notes}
+                  </p>
+                </div>
+              </TableCell>
               <TableCell>
                 <span className={`capitalize px-2 py-1 rounded-full text-sm
                   ${expense.status === 'approved' ? 'bg-green-100 text-green-800' : 

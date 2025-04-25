@@ -105,10 +105,11 @@ function generateExpenses() {
 export default function ExpenseForm() {
   const [parsedData, setParsedData] = useState<ParsedReceipt | null>(null);
   
-  // Initialize the form
+  // Initialize the form with all fields having defined default values
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      employeeName: "",
       date: "",
       category: "",
       amount: "",
@@ -149,11 +150,15 @@ export default function ExpenseForm() {
     // Get existing expenses from localStorage or use empty array
     const existingExpenses = JSON.parse(localStorage.getItem('expenses') || '[]')
     
+    // Get today's date in YYYY-MM-DD format
+    const today = new Date().toISOString().split('T')[0]
+    
     // Create new expense
     const newExpense = {
       id: Date.now().toString(),
       employeeName: values.employeeName,
       date: values.date,
+      submissionDate: today, // Add submission date
       category: values.category,
       amount: parseFloat(values.amount),
       status: 'pending',

@@ -1,19 +1,21 @@
-export interface Expense {
+export type Expense = {
   id: string;
   employeeName: string;
   date: string;
+  submissionDate?: string;
   category: string;
   amount: number;
-  notes: string;
   status: 'pending' | 'approved' | 'rejected';
+  notes: string;
   receiptUrl: string;
-}
+};
 
 export const mockExpenses: Expense[] = [
   {
     id: '23',
     employeeName: 'Tony Stark',
     date: '2025-04-24',
+    submissionDate: '2025-04-24',
     category: 'meals',
     amount: 42.99,
     notes: 'Working lunch with department',
@@ -24,6 +26,7 @@ export const mockExpenses: Expense[] = [
     id: '22',
     employeeName: 'Tony Stark',
     date: '2025-04-23',
+    submissionDate: '2025-04-23',
     category: 'travel',
     amount: 1250.00,
     notes: 'International business flight',
@@ -34,6 +37,7 @@ export const mockExpenses: Expense[] = [
     id: '21',
     employeeName: 'Peter Parker',
     date: '2025-04-22',
+    submissionDate: '2025-04-22',
     category: 'supplies',
     amount: 999.99,
     notes: 'New laptop accessories',
@@ -44,6 +48,7 @@ export const mockExpenses: Expense[] = [
     id: '20',
     employeeName: 'Diana Prince',
     date: '2025-04-21',
+    submissionDate: '2025-04-21',
     category: 'meals',
     amount: 195.75,
     notes: 'Team building dinner - 5 people',
@@ -54,6 +59,7 @@ export const mockExpenses: Expense[] = [
     id: '19',
     employeeName: 'Peter Parker',
     date: '2025-04-20',
+    submissionDate: '2025-04-20',
     category: 'travel',
     amount: 55.00,
     notes: 'Uber rides to client office',
@@ -64,6 +70,7 @@ export const mockExpenses: Expense[] = [
     id: '18',
     employeeName: 'Diana Prince',
     date: '2025-04-18',
+    submissionDate: '2025-04-18',
     category: 'supplies',
     amount: 175.25,
     notes: 'Office decorations for company event',
@@ -74,6 +81,7 @@ export const mockExpenses: Expense[] = [
     id: '17',
     employeeName: 'Bruce Wayne',
     date: '2025-04-16',
+    submissionDate: '2025-04-16',
     category: 'meals',
     amount: 28.50,
     notes: 'Overtime dinner',
@@ -84,6 +92,7 @@ export const mockExpenses: Expense[] = [
     id: '16',
     employeeName: 'Bruce Wayne',
     date: '2025-04-14',
+    submissionDate: '2025-04-14',
     category: 'travel',
     amount: 890.00,
     notes: 'Conference registration + hotel',
@@ -94,6 +103,7 @@ export const mockExpenses: Expense[] = [
     id: '15',
     employeeName: 'Peter Parker',
     date: '2025-04-12',
+    submissionDate: '2025-04-12',
     category: 'supplies',
     amount: 529.99,
     notes: 'New office chair (ergonomic)',
@@ -104,6 +114,7 @@ export const mockExpenses: Expense[] = [
     id: '14',
     employeeName: 'Diana Prince',
     date: '2025-04-10',
+    submissionDate: '2025-04-10',
     category: 'meals',
     amount: 145.80,
     notes: 'Client lunch meeting - 4 people',
@@ -114,6 +125,7 @@ export const mockExpenses: Expense[] = [
     id: '13',
     employeeName: 'Bruce Wayne',
     date: '2025-04-08',
+    submissionDate: '2025-04-08',
     category: 'travel',
     amount: 65.00,
     notes: 'Parking fees for client visit',
@@ -124,6 +136,7 @@ export const mockExpenses: Expense[] = [
     id: '12',
     employeeName: 'Tony Stark',
     date: '2025-04-05',
+    submissionDate: '2025-04-05',
     category: 'supplies',
     amount: 89.99,
     notes: 'Ergonomic keyboard',
@@ -134,6 +147,7 @@ export const mockExpenses: Expense[] = [
     id: '11',
     employeeName: 'Peter Parker',
     date: '2025-03-29',
+    submissionDate: '2025-03-29',
     category: 'meals',
     amount: 75.25,
     notes: 'Department celebration dinner',
@@ -144,6 +158,7 @@ export const mockExpenses: Expense[] = [
     id: '10',
     employeeName: 'Bruce Wayne',
     date: '2025-03-22',
+    submissionDate: '2025-03-22',
     category: 'travel',
     amount: 550.00,
     notes: 'Flight to Chicago for training',
@@ -154,6 +169,7 @@ export const mockExpenses: Expense[] = [
     id: '9',
     employeeName: 'Diana Prince',
     date: '2025-03-15',
+    submissionDate: '2025-03-15',
     category: 'supplies',
     amount: 159.99,
     notes: 'Printer cartridges',
@@ -164,6 +180,7 @@ export const mockExpenses: Expense[] = [
     id: '8',
     employeeName: 'Tony Stark',
     date: '2025-03-08',
+    submissionDate: '2025-03-08',
     category: 'meals',
     amount: 35.50,
     notes: 'Team lunch meeting',
@@ -174,6 +191,7 @@ export const mockExpenses: Expense[] = [
     id: '7',
     employeeName: 'Peter Parker',
     date: '2025-03-01',
+    submissionDate: '2025-03-01',
     category: 'travel',
     amount: 450.00,
     notes: 'Hotel stay for conference',
@@ -184,6 +202,7 @@ export const mockExpenses: Expense[] = [
     id: '6',
     employeeName: 'Bruce Wayne',
     date: '2025-02-22',
+    submissionDate: '2025-02-22',
     category: 'supplies',
     amount: 299.99,
     notes: 'New monitor for home office',
@@ -194,6 +213,7 @@ export const mockExpenses: Expense[] = [
     id: '5',
     employeeName: 'Tony Stark',
     date: '2025-02-15',
+    submissionDate: '2025-02-15',
     category: 'meals',
     amount: 89.99,
     notes: 'Client dinner at Italian Restaurant',
@@ -204,6 +224,7 @@ export const mockExpenses: Expense[] = [
     id: '4',
     employeeName: 'Diana Prince',
     date: '2025-02-08',
+    submissionDate: '2025-02-08',
     category: 'travel',
     amount: 125.75,
     notes: 'Taxi rides for client meetings',
@@ -214,6 +235,7 @@ export const mockExpenses: Expense[] = [
     id: '3',
     employeeName: 'Peter Parker',
     date: '2025-02-01',
+    submissionDate: '2025-02-01',
     category: 'supplies',
     amount: 45.50,
     notes: 'Office supplies',
@@ -224,6 +246,7 @@ export const mockExpenses: Expense[] = [
     id: '2',
     employeeName: 'Bruce Wayne',
     date: '2025-01-25',
+    submissionDate: '2025-01-25',
     category: 'travel',
     amount: 250.00,
     notes: 'Flight to New York',
@@ -234,6 +257,7 @@ export const mockExpenses: Expense[] = [
     id: '1',
     employeeName: 'Tony Stark',
     date: '2025-01-18',
+    submissionDate: '2025-01-18',
     category: 'meals',
     amount: 15.99,
     notes: 'Merchant: Coffee Shop',
